@@ -1,0 +1,37 @@
+
+<button (click)="onHomeClick()">Home</button> &nbsp;<button (click)="onLogOutClick()">LogOut</button>
+<div><br/></div>
+<ng-container *ngIf="showLogin">
+  <div>Enter User Name </div> <input id="userName" type="text" [(ngModel)]="inUserName" /> <button (click)="onLoginClick()">login</button>
+</ng-container>
+<ng-container *ngIf="showAccounts">
+  <div>
+    <span> Accounts of <b>{{inUserName}}</b></span>
+  </div>
+  <div>
+    <br></div>
+  <div *ngFor="let account of userAccounts">
+    <span>Account Number: </span><span>{{account.accountNumber}}</span> &nbsp;
+    <span>Account Balance: </span><span>{{account.balance}}</span>&nbsp;
+    <span>Account Type: </span><span>{{account.accountType ==0 ? 'Current' : account.accountType == 1? 'Savings' : 'Loan'}}</span>
+  </div>
+  <br/>
+  <div><button (click)="onRequestNewLoanClick()">Request New Loan</button> &nbsp;<button (click)="onViewAllLoanApplicationsClick()">View Loan Applications</button></div>
+</ng-container>
+<ng-container *ngIf="showNewLoanRequest">
+<div>
+  <span>Loan Duration</span> <input id="loanDuration" [(ngModel)]="inLoanDuration"/>
+  <span>Loan Amount</span> <input id="loanAmount" [(ngModel)]="inLoanAmount"/>
+  <button (click)="onSubmit(inLoanDuration,inLoanAmount)">Submit</button>
+</div>
+</ng-container>
+<ng-container *ngIf="showApplications">
+  <div *ngFor="let application of loanApplications">
+    <span>Application Number: </span> <span>{{application.applicationId}}</span> &nbsp;
+    
+    <span>Loan Duration: </span> <span>{{application.loanDuration}}</span> &nbsp;
+    <span>Interest Rate: </span> <span>{{application.interestRate > -1 ? application.interestRate : 'N/A'}}</span>  &nbsp;
+    <span>Loan Status: </span> <span>{{ application.applicationStatus == 0 ? 'Approved' : 'Rejected'}}</span> &nbsp;
+    <span>Loan Account Number: </span> <span>{{application.loanAccountNumber}}</span>
+  </div>
+</ng-container>
